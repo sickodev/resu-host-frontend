@@ -6,6 +6,7 @@
 	let uploading: boolean = false;
 	let errorMessage: string = '';
 	let successLink: string = '';
+	let expiresAt: string;
 
 	function handleFileChange(event: Event) {
 		const target = event.target as HTMLInputElement;
@@ -40,8 +41,8 @@
 			}
 
 			const result = await response.json();
-			console.log(result)
 			successLink = result.data.filePath;
+			expiresAt = new Date(result.data.expiresAt).toLocaleString();
 		} catch (error: any) {
 			errorMessage = error.message();
 		}finally{
@@ -82,6 +83,7 @@
     <div class="p-4 rounded text-sm">
       <p class="text-emerald-500 mb-1"> Uploaded successfully!</p>
       <a href={successLink} class="text-blue-400 underline break-all">{successLink}</a>
+			<p class="text-neutral-500 font-semibold">Expires At: {expiresAt}</p>
     </div>
   {/if}
 </div>
